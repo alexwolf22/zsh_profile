@@ -14,6 +14,9 @@ prompt pure
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 export TERMINAL='iTerm.app'
 
+# Add npm and node modules to path
+export PATH="/usr/local/opt/node@10/bin:$PATH"
+
 # Add sublime test editor command to path
 # mkdir -p ~/bin
 # rm -f ~/bin/subl
@@ -99,7 +102,7 @@ source $ZSH/oh-my-zsh.sh
 
 # BUG FIXES
 export PATH="/usr/local/opt/postgresql@9.6/bin:$PATH"
-export LDFLAGS="-L/usr/local/opt/openssl/lib"
+export LDFLAGS="-I /usr/local/opt/openssl@1.1/include -L /usr/local/opt/openssl@1.1/lib"
 
 # Install and add Fzf search ( https://github.com/junegunn/fzf#usage )
 brew install fzf > /dev/null 2>&1
@@ -141,27 +144,37 @@ unalias -m '*'
 # Make Parrot
 alias parrot='curl parrot.live'
 
-# Make LS Colorful
+# Add color ls
 alias lc='colorls -lA --sd'
+
+# Make regualr ls have colors
+export CLICOLOR=1
+export LSCOLORS=GxFxCxDxBxegedabagaced
 
 # BOWTIE ALIASES
 alias mg='docker-compose run --rm chatbot-web ./manage.py migrate'
 alias mm='docker-compose run --rm chatbot-web ./manage.py makemigrations'
 alias mmm='docker-compose run --rm chatbot-web ./manage.py makemigrations --merge'
+alias lmj='docker-compose run --rm chatbot-web ./manage.py load_menu_json'
+
+alias wp='/Users/alex.wolf/Documents/chatbot-web/node_modules/.bin/webpack'
+alias wpw='/Users/alex.wolf/Documents/chatbot-web/node_modules/.bin/webpack --watch'
 
 # Docker Alias
 alias dp='docker ps'
-alias dpg='docker exec -it postgres psql -U bowtie'
+alias dpsql='docker exec -it postgres psql -U bowtie'
+alias dcw='dokcer exec -it chatbot-web bash'
+alias dj='docker exec -it jupyter bash'
 
 # DEV OPS ALIASES
 alias pmo='git push origin master'
 alias ddc='docker rm -f $(docker ps -aq)'
 alias ddi='docker rmi -f $(docker images -q)'
-alias raws='source ~/Documents/chatbot-web/env/bin/activate; okta_aws default sts get-caller-identity; deactivate'
+
 
 # Dataiku Start Alias
-alias dsss='~/Library/DataScienceStudio/dss_home/bin/dss start'
-alias dssst='~/Library/DataScienceStudio/dss_home/bin/dss stop'
+alias dsss='/Users/alex.wolf/Library/DataScienceStudio/dss_home/bin/dss start'
+alias dssst='/Users/alex.wolf/Library/DataScienceStudio/dss_home/bin/dss stop'
 
 # Common
 alias h='history'
@@ -172,7 +185,7 @@ alias lsl='ls -l'
 # lr:  Full Recursive Directory Listing
 alias lr='ls -R | grep ":$" | sed -e '\''s/:$//'\'' -e '\''s/[^-][^\/]*\//--/g'\'' -e '\''s/^/   /'\'' -e '\''s/-/|/'\'' | less'
 
-# Program Aliases
+# Python Aliases
 alias py='python'
 alias bpy='source ~/Documents/chatbot-web/env/bin/python; python'
 alias spy='source ~/Documents/chatbot-web/env/bin/activate'
@@ -203,14 +216,110 @@ source $(dirname $(gem which colorls))/tab_complete.sh
 alias gs='git status'
 alias gc='git commit -m'
 alias gst='git stash'
-alias gsa='git stash apply'
+alias gsta='git stash apply'
 alias gl='git log'
 alias gaa='git add -A'
 alias ga='git add'
 alias gd='git diff'
+alias gm='git merge'
+alias gpo="git push origin"
 alias gpom='git push origin master'
-alias gpo="git push origin $(git rev-parse --abbrev-ref HEAD)"
-alias gpull='git pull origin master'
+alias gpu='git pull origin'
+alias gpum='git pull origin master'
+alias gch='git checkout'
+alias gchm='git checkout master'
+alias gbn='git checkout -b'          # Create new git branch
+alias gb='git branch'
+alias gba='git branch -a'
+alias grs='git reset --soft HEAD~1'   # Undo last coommit keep changes
+alias grh='git reset --hard HEAD~1'   # Undo last commit remove changes
+alias gr='git reset'                  # Remove all staged files for commit
+# Resets the amster branch to what it is on origin
+alias grom='git checkout master; git reset --hard origin/master' 
+
+
+# Ngrok for bowtie
+alias ngk='ngrok http 8000'
 
 # Gtop tool
 alias gtop='docker run --rm -it --name gtop --net="host" --pid="host" aksakalli/gtop'
+
+# Colors for printing
+RED=$'\e[1;31m'
+GREEN=$'\e[1;32m'
+BLUE=$'\e[1;34m'
+PURPLE=$'\e[1;35m'
+ENDCOLOR=$'\e[0m'
+CYAN=$'\e[1;36m'
+WHITE=$'\e[1;37m'
+
+# convert pycharm relative path to test path
+tp () {
+	local test_path="${1//\//.}"
+	printf "\n"$WHITE"${test_path//.py/}"$ENDCOLOR"\n"
+}
+
+# delete_local_merged_branches () {
+
+# 	strip_branch_names () {
+# 		for i in $1; do
+			
+# 	}
+# 	branches=("${(@f)$(git branch --no-merged)}")
+# 	for branch in $branches; do
+# 		branch="${branch// /}"
+# 		# git branch -d $branch
+# 	done
+# }
+
+squash_all_commits() {
+	BRANCH=$(git symbolic-ref HEAD | sed -e 's,.*/\(.*\),\1,')
+
+	if [ "$BRANCH" = 'master' ]
+	then
+		echo "You are on the "$CYAN"master"$ENDCOLOR" branch. Not able to squash commits"$RED" exiting"$ENDCOLOR"."
+		exit 1
+	fi
+
+	printf "About to squash all commits on Branch "$BLUE"$BRANCH"$ENDCOLOR".\n\nAre you sure you want to continue?"
+	read user_continue
+	if [ "$user_continue" != 'y' ]
+	then
+	    echo 'Ok, bye.'
+	    exit 1
+	fi
+
+	# Make sure master brnach is updated first
+	printf "\n\nUpdating your local master branch first\n"
+	git checkout master
+	git pull origin master
+	git checkout $BRANCH
+
+	printf "\n\nPlease enter a commit message for the squash: "
+	read commit_message
+
+	git reset $(git merge-base origin/master $BRANCH)
+ 	git add -A
+ 	git commit -m "$commit_message"
+}
+
+ZSH_GIT_PATH='/Users/alex.wolf/Documents/github/zsh_profile'
+zsh_git_push() {
+	cur_dir=$(pwd)
+	cd $ZSH_GIT_PATH
+
+	zsh_git_path="${ZSH_GIT_PATH}/zshrc"
+	/bin/cp -rf ~/.zshrc $zsh_git_path
+
+	if [[ `git status --porcelain` ]]; then
+		# Changes
+		git add -A
+		git commit -m 'updated .zshrc'
+		git push origin master
+	else
+	  # No changes
+	fi
+
+	cd $cur_dir
+}
+
