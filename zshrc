@@ -317,7 +317,7 @@ zsh_git_push() {
 		git commit -m 'updated .zshrc'
 		git push origin master
 	else
-		echo "\nNo changes in .zshrc file\n"
+		echo "\nNo changes in .zshrc file"
 	fi
 
 	cd $cur_dir
