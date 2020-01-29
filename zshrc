@@ -245,7 +245,7 @@ alias ngk='ngrok http 8000'
 alias gtop='docker run --rm -it --name gtop --net="host" --pid="host" aksakalli/gtop'
 
 # Install spacy model
-alias install_spacy_en='python -m spacy download en_core_web_sm'
+alias dw_spacy_en='python -m spacy download en_core_web_sm'
 
 # Colors for printing
 RED=$'\e[1;31m'
@@ -326,3 +326,31 @@ zsh_git_push() {
 	cd $cur_dir
 }
 
+BOWTIE_DIR='/Users/alex.wolf/Documents/chatbot-web'
+pip_compile() {
+	cur_dir=$(pwd)
+	if [ "$1" != 'prod' ] && [ "$1" != 'dev' ]; then
+		echo "\nPlease pass 'dev' or 'prod' as the first arguemnt to the call"
+	else
+		in_file="${BOWTIE_DIR}/requirements/${1}.in"
+		output_file="${BOWTIE_DIR}/requirements/${1}.txt"
+		/Users/alex.wolf/Documents/env27/bin/pip-compile -v --output-file $output_file $in_file
+	fi
+}
+
+move_envs_b(){
+	mv /Users/alex.wolf/Documents/chatbot-web/env27 /Users/alex.wolf/Documents/env27
+	mv /Users/alex.wolf/Documents/chatbot-web/env37 /Users/alex.wolf/Documents/env37
+}
+
+move_envs_f() {
+	mv /Users/alex.wolf/Documents/env27 /Users/alex.wolf/Documents/chatbot-web/env27
+	mv /Users/alex.wolf/Documents/env37 /Users/alex.wolf/Documents/chatbot-web/env37
+}
+
+alias frize='/Users/alex.wolf/Documents/fenv/bin/futurize'
+
+apply_fix() {
+	cd $BOWTIE_DIR
+	frize -w -n -f $1 -j 12 **/*.py
+}
