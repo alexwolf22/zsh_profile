@@ -244,6 +244,9 @@ alias ngk='ngrok http 8000'
 # Gtop tool
 alias gtop='docker run --rm -it --name gtop --net="host" --pid="host" aksakalli/gtop'
 
+# Install spacy model
+alias install_spacy_en='python -m spacy download en_core_web_sm'
+
 # Colors for printing
 RED=$'\e[1;31m'
 GREEN=$'\e[1;32m'
