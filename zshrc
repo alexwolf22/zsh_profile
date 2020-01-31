@@ -326,6 +326,7 @@ zsh_git_push() {
 	cd $cur_dir
 }
 
+
 BOWTIE_DIR='/Users/alex.wolf/Documents/chatbot-web'
 pip_compile() {
 	cur_dir=$(pwd)
@@ -334,7 +335,16 @@ pip_compile() {
 	else
 		in_file="${BOWTIE_DIR}/requirements/${1}.in"
 		output_file="${BOWTIE_DIR}/requirements/${1}.txt"
-		/Users/alex.wolf/Documents/env27/bin/pip-compile -v --output-file $output_file $in_file
+		/Users/alex.wolf/Documents/general_env/bin/pip-compile -v --output-file $output_file $in_file
+
+		#Fix the security libs Bowtie requires
+		search='msgpack==.*'
+		replacement='msgpack==0.6.1            # custom version upgrade for Bowtie'
+		sed -i '' "s/${search}/${replacement}/" $output_file
+
+		search='urllib3==.*'
+		replacement='urllib3==1.25.2           # custom version upgrade for Bowtie'
+		sed -i '' "s/${search}/${replacement}/" $output_file
 	fi
 }
 
@@ -348,9 +358,14 @@ move_envs_f() {
 	mv /Users/alex.wolf/Documents/env37 /Users/alex.wolf/Documents/chatbot-web/env37
 }
 
-alias frize='/Users/alex.wolf/Documents/fenv/bin/futurize'
+alias frize='/Users/alex.wolf/Documents/general_env/bin/futurize'
 
 apply_fix() {
-	cd $BOWTIE_DIR
-	frize -w -n -f $1 -j 12 **/*.py
+	cd '/Users/alex.wolf/Documents/chatbot-web'
+	/Users/alex.wolf/Documents/general_env/bin/futurize -w -n -f $1 -j 12 **/*.py
+}
+
+apply_23fix() {
+	cd '/Users/alex.wolf/Documents/chatbot-web'
+	/usr/local/bin/2to3 -w -n -f $1 -j 12 **/*.py
 }
