@@ -151,13 +151,19 @@ alias lc='colorls -lA --sd'
 export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagaced
 
-# BOWTIE ALIASES
+# Bowtie Docker Aliases
 alias mg='docker-compose run --rm chatbot-web ./manage.py migrate'
 alias mm='docker-compose run --rm chatbot-web ./manage.py makemigrations'
 alias mmm='docker-compose run --rm chatbot-web ./manage.py makemigrations --merge'
 alias lmj='docker-compose run --rm chatbot-web ./manage.py load_menu_json'
 
-alias wp='/Users/alex.wolf/Documents/chatbot-web/node_modules/.bin/webpack'
+# Bowtie Local Aliase
+alias mgl='./manage.py migrate'
+alias mml='./manage.py makemigrations'
+alias mmml='./manage.py makemigrations --merge'
+alias lmjl='./manage.py load_menu_json'
+
+alias wp='/Users/alex.wolf/Documents/chatbot-web/node_modules/.bin/webpack --mode=production'
 alias wpw='/Users/alex.wolf/Documents/chatbot-web/node_modules/.bin/webpack --watch'
 
 # Docker Alias
@@ -166,11 +172,9 @@ alias dpsql='docker exec -it postgres psql -U bowtie'
 alias dcw='dokcer exec -it chatbot-web bash'
 alias dj='docker exec -it jupyter bash'
 
-# DEV OPS ALIASES
-alias pmo='git push origin master'
+# Dev Ops ALIASES
 alias ddc='docker rm -f $(docker ps -aq)'
 alias ddi='docker rmi -f $(docker images -q)'
-
 
 # Dataiku Start Alias
 alias dsss='/Users/alex.wolf/Library/DataScienceStudio/dss_home/bin/dss start'
@@ -234,7 +238,7 @@ alias gba='git branch -a'
 alias grs='git reset --soft HEAD~1'   # Undo last coommit keep changes
 alias grh='git reset --hard HEAD~1'   # Undo last commit remove changes
 alias gr='git reset'                  # Remove all staged files for commit
-# Resets the amster branch to what it is on origin
+# Resets the master branch to what it is on origin
 alias grom='git checkout master; git reset --hard origin/master' 
 
 
@@ -284,7 +288,7 @@ squash_all_commits() {
 		exit 1
 	fi
 
-	printf "About to squash all commits on Branch "$BLUE"$BRANCH"$ENDCOLOR".\n\nAre you sure you want to continue?"
+	printf "About to squash all commits on Branch "$BLUE"$BRANCH"$ENDCOLOR".\n\nAre you sure you want to continue (y/n)? "
 	read user_continue
 	if [ "$user_continue" != 'y' ]
 	then
@@ -362,10 +366,10 @@ alias frize='/Users/alex.wolf/Documents/general_env/bin/futurize'
 
 apply_fix() {
 	cd '/Users/alex.wolf/Documents/chatbot-web'
-	/Users/alex.wolf/Documents/general_env/bin/futurize -w -n -f $1 -j 12 **/*.py
+	/Users/alex.wolf/Documents/general_env/bin/futurize -w -n -f $1 -j 12 --no-diffs **/*.py
 }
 
 apply_23fix() {
 	cd '/Users/alex.wolf/Documents/chatbot-web'
-	/usr/local/bin/2to3 -w -n -f $1 -j 12 **/*.py
+	/usr/local/bin/2to3 -w -n -f $1 -j 12 --no-diffs **/*.py
 }
