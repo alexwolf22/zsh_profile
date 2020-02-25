@@ -1,12 +1,13 @@
-# Install 'pure' zsh theme if not isntalled yet
-if [ -f ~/.zsh/pure/pure.plugin.zsh ]; then
-	mkdir -p ~/.zsh
-	rm -rf ~/.zsh/pure
-	git clone https://github.com/sindresorhus/pure.git ~/.zsh/pure > /dev/null 2>&1
-	fpath+=~/.zsh/pure
-fi 
+# # Install 'pure' zsh theme if not isntalled yet
+# if [ -f ~/.zsh/pure/pure.plugin.zsh ]; then
+# 	mkdir -p ~/.zsh
+# 	rm -rf ~/.zsh/pure
+# 	git clone https://github.com/sindresorhus/pure.git ~/.zsh/pure > /dev/null 2>&1
+# 	fpath+=~/.zsh/pure
+# fi 
 
 # .zshrc
+fpath+=~/.zsh/pure
 autoload -U promptinit; promptinit
 prompt pure
 
@@ -108,9 +109,12 @@ export LDFLAGS="-I /usr/local/opt/openssl@1.1/include -L /usr/local/opt/openssl@
 brew install fzf > /dev/null 2>&1
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# Init pyenv and pyenv virtual envs
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
 #ASCII Art Splash Screen
 #python3 ~/Documents/github/ASCII-Art-Splash-Screen/ascii.py
-
 
 # User configuration
 
@@ -140,6 +144,11 @@ brew install fzf > /dev/null 2>&1
 
 # Delete all Alias's defined by ZSh and plugins
 unalias -m '*'
+
+# Pyenv Aliases
+CURR_BOWTIE_ENV='bowtie-3.6.10'
+alias pyenvv='pyenv versions'
+alias spy='pyenv activate $CURR_BOWTIE_ENV'
 
 # Make Parrot
 alias parrot='curl parrot.live'
@@ -188,11 +197,6 @@ alias lsa='ls -a'
 alias lsl='ls -l'
 # lr:  Full Recursive Directory Listing
 alias lr='ls -R | grep ":$" | sed -e '\''s/:$//'\'' -e '\''s/[^-][^\/]*\//--/g'\'' -e '\''s/^/   /'\'' -e '\''s/-/|/'\'' | less'
-
-# Python Aliases
-alias py='python'
-alias bpy='source ~/Documents/chatbot-web/env/bin/python; python'
-alias spy='source ~/Documents/chatbot-web/env/bin/activate'
 
 # Bash
 alias ebash='subl ~/.bash_profile'

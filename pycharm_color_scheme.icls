@@ -1,10 +1,10 @@
-<scheme name="Monokai" version="142" parent_scheme="Darcula">
+<scheme name="Monokai copy" version="142" parent_scheme="Darcula">
   <metaInfo>
-    <property name="created">2020-02-14T15:30:45</property>
+    <property name="created">2020-02-25T18:02:04</property>
     <property name="ide">Python</property>
-    <property name="ideVersion">2019.2.4.0.0</property>
-    <property name="modified">2020-02-14T15:31:13</property>
-    <property name="originalScheme">_@user_Monokai</property>
+    <property name="ideVersion">2019.3.3.0.0</property>
+    <property name="modified">2020-02-25T18:02:29</property>
+    <property name="originalScheme">Monokai copy</property>
   </metaInfo>
   <colors>
     <option name="CARET_COLOR" value="f8f8f0" />
@@ -1148,6 +1148,11 @@
         <option name="FOREGROUND" value="75715e" />
       </value>
     </option>
+    <option name="PY.FSTRING_FRAGMENT_BRACES">
+      <value>
+        <option name="FOREGROUND" value="cbe249" />
+      </value>
+    </option>
     <option name="PY.INVALID_STRING_ESCAPE">
       <value>
         <option name="FOREGROUND" value="f8f8f0" />
@@ -1200,12 +1205,12 @@
     </option>
     <option name="PY.STRING.B">
       <value>
-        <option name="FOREGROUND" value="ffde06" />
+        <option name="FOREGROUND" value="cbe249" />
       </value>
     </option>
     <option name="PY.STRING.U">
       <value>
-        <option name="FOREGROUND" value="cbe249" />
+        <option name="FOREGROUND" value="ffde06" />
       </value>
     </option>
     <option name="PY.VALID_STRING_ESCAPE">
