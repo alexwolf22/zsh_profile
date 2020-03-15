@@ -160,20 +160,20 @@ alias lc='colorls -lA --sd'
 export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagaced
 
-# Bowtie Docker Aliases
-alias mg='docker-compose run --rm chatbot-web ./manage.py migrate'
-alias mm='docker-compose run --rm chatbot-web ./manage.py makemigrations'
-alias mmm='docker-compose run --rm chatbot-web ./manage.py makemigrations --merge'
-alias lmj='docker-compose run --rm chatbot-web ./manage.py load_menu_json'
-
 # Bowtie Local Aliase
-alias mgl='./manage.py migrate'
-alias mml='./manage.py makemigrations'
-alias mmml='./manage.py makemigrations --merge'
-alias lmjl='./manage.py load_menu_json'
+alias mg='./manage.py migrate'
+alias mm='./manage.py makemigrations'
+alias mmm='./manage.py makemigrations --merge'
+alias lmj='./manage.py load_menu_json'
+
+# Bowtie Docker Aliases
+alias mgd='docker-compose run --rm chatbot-web ./manage.py migrate'
+alias mmd='docker-compose run --rm chatbot-web ./manage.py makemigrations'
+alias mmmd='docker-compose run --rm chatbot-web ./manage.py makemigrations --merge'
+alias lmjd='docker-compose run --rm chatbot-web ./manage.py load_menu_json'
 
 alias wp='/Users/alex.wolf/Documents/chatbot-web/node_modules/.bin/webpack --mode=production'
-alias wpw='/Users/alex.wolf/Documents/chatbot-web/node_modules/.bin/webpack --watch'
+alias wpw='/Users/alex.wolf/Documents/chatbot-web/node_modules/.bin/webpack --mode=development --watch'
 
 # Docker Alias
 alias dp='docker ps'
@@ -356,24 +356,31 @@ pip_compile() {
 	fi
 }
 
-move_envs_b(){
-	mv /Users/alex.wolf/Documents/chatbot-web/env27 /Users/alex.wolf/Documents/env27
-	mv /Users/alex.wolf/Documents/chatbot-web/env37 /Users/alex.wolf/Documents/env37
+kill_processes_with_port(){
+	lsof -ti:$1 | xargs kill
 }
 
-move_envs_f() {
-	mv /Users/alex.wolf/Documents/env27 /Users/alex.wolf/Documents/chatbot-web/env27
-	mv /Users/alex.wolf/Documents/env37 /Users/alex.wolf/Documents/chatbot-web/env37
-}
 
-alias frize='/Users/alex.wolf/Documents/general_env/bin/futurize'
+# STUFF USED FOR PYZTHON 3 Migration
 
-apply_fix() {
-	cd '/Users/alex.wolf/Documents/chatbot-web'
-	/Users/alex.wolf/Documents/general_env/bin/futurize -w -n -f $1 -j 12 --no-diffs **/*.py
-}
+# move_envs_b(){
+# 	mv /Users/alex.wolf/Documents/chatbot-web/env27 /Users/alex.wolf/Documents/env27
+# 	mv /Users/alex.wolf/Documents/chatbot-web/env37 /Users/alex.wolf/Documents/env37
+# }
 
-apply_23fix() {
-	cd '/Users/alex.wolf/Documents/chatbot-web'
-	/usr/local/bin/2to3 -w -n -f $1 -j 12 --no-diffs **/*.py
-}
+# move_envs_f() {
+# 	mv /Users/alex.wolf/Documents/env27 /Users/alex.wolf/Documents/chatbot-web/env27
+# 	mv /Users/alex.wolf/Documents/env37 /Users/alex.wolf/Documents/chatbot-web/env37
+# }
+
+# alias frize='/Users/alex.wolf/Documents/general_env/bin/futurize'
+
+# apply_fix() {
+# 	cd '/Users/alex.wolf/Documents/chatbot-web'
+# 	/Users/alex.wolf/Documents/general_env/bin/futurize -w -n -f $1 -j 12 --no-diffs **/*.py
+# }
+
+# apply_23fix() {
+# 	cd '/Users/alex.wolf/Documents/chatbot-web'
+# 	/usr/local/bin/2to3 -w -n -f $1 -j 12 --no-diffs **/*.py
+# }
