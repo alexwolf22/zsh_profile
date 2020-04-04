@@ -217,9 +217,6 @@ alias ...='cd ..; cd ..'
 alias ....='cd ..; cd ..; cd ..'
 alias o='open'
 
-# color ls tab completion
-source $(dirname $(gem which colorls))/tab_complete.sh
-
 # Git
 alias gs='git status'
 alias gc='git commit -m'
@@ -358,6 +355,58 @@ pip_compile() {
 
 kill_processes_with_port(){
 	lsof -ti:$1 | xargs kill
+}
+
+BOWTIE_TEST_SUITE_DIR='/Users/alex.wolf/Documents/chatbot-web-tests'
+run_full_test_suite(){
+	cur_dir=$(pwd)
+
+	# Get branch to run test suite for
+	if [ -z "$1" ]; then
+	    printf "\nNo branch supplied to run full test suite. Please supply one as first argument\n"
+	    return
+	else
+		BRANCH=$1
+	fi
+
+	# Go to project test suite dir and pull in branch
+	cd $BOWTIE_TEST_SUITE_DIR
+
+	# Pull in latest master branch
+	printf "Pulling branch "$WHITE"master"$ENDCOLOR" from origin"
+	git checkout master > /dev/null 2>&1
+	git pull origin master --force > /dev/null 2>&1
+
+	# Try to merge branch with master before testing
+	if [ "$BRANCH" != 'master' ]; then
+
+		# Pull in latest branch to merge
+		printf "\nPulling branch "$CYAN"$BRANCH"$ENDCOLOR" from origin\n"
+		git checkout $BRANCH > /dev/null 2>&1
+		git pull origin $BRANCH --force > /dev/null 2>&1
+
+		# Try to Merge Master branch into this one
+		printf "Merging branch "$CYAN"$BRANCH"$ENDCOLOR" with "$WHITE"master"$ENDCOLOR"\n"
+		git merge master --no-edit > /dev/null 2>&1
+
+		# If had merge conflict notify user and abort
+		if [ $? -eq 1 ]; then
+  			git merge --abort
+    		printf "\n"$RED"ERROR:"$ENDCOLOR" Branch "$CYAN"$BRANCH"$ENDCOLOR" had merge conflicts with master. Please fix them on origin before running the full test suite.\n"
+    		cd $cur_dir
+    		return
+		fi
+	fi
+
+	# Activate Bowtie Python enviroment
+	pyenv activate $CURR_BOWTIE_ENV > /dev/null 2>&1
+
+	# Run fulll test suite
+	printf "\nRunning full test suite on merged branch "$CYAN"$BRANCH"$ENDCOLOR"\n\n"
+	$BOWTIE_TEST_SUITE_DIR/manage.py test --nomigrations  --noinput
+
+	cd $cur_dir
+
 }
 
 
