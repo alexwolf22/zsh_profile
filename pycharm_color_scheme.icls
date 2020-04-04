@@ -1,9 +1,9 @@
 <scheme name="Monokai copy" version="142" parent_scheme="Darcula">
   <metaInfo>
-    <property name="created">2020-02-25T18:02:04</property>
+    <property name="created">2020-04-04T18:36:19</property>
     <property name="ide">Python</property>
     <property name="ideVersion">2019.3.3.0.0</property>
-    <property name="modified">2020-02-25T18:02:29</property>
+    <property name="modified">2020-04-04T18:36:32</property>
     <property name="originalScheme">Monokai copy</property>
   </metaInfo>
   <colors>
@@ -262,7 +262,6 @@
     <option name="CONSOLE_USER_INPUT">
       <value>
         <option name="FOREGROUND" value="6ae96a" />
-        <option name="FONT_TYPE" value="2" />
       </value>
     </option>
     <option name="CONSOLE_YELLOW_OUTPUT">
@@ -1150,7 +1149,7 @@
     </option>
     <option name="PY.FSTRING_FRAGMENT_BRACES">
       <value>
-        <option name="FOREGROUND" value="cbe249" />
+        <option name="FOREGROUND" value="a6e22e" />
       </value>
     </option>
     <option name="PY.INVALID_STRING_ESCAPE">
