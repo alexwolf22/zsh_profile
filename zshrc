@@ -409,6 +409,11 @@ run_full_test_suite(){
 
 }
 
+drop_db_connect(){
+	# Drop force drop connections to a specific postgres database
+	psql -U alex.wolf -c "SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = '${1}';"
+}
+
 
 # STUFF USED FOR PYZTHON 3 Migration
 

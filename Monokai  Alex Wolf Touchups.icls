@@ -1,15 +1,15 @@
-<scheme name="Monokai copy" version="142" parent_scheme="Darcula">
+<scheme name="Monokai  Alex Wolf Touchups" version="142" parent_scheme="Darcula">
   <metaInfo>
-    <property name="created">2020-04-04T18:36:19</property>
+    <property name="created">2020-06-21T16:20:32</property>
     <property name="ide">Python</property>
-    <property name="ideVersion">2019.3.3.0.0</property>
-    <property name="modified">2020-04-04T18:36:32</property>
-    <property name="originalScheme">Monokai copy</property>
+    <property name="ideVersion">2020.1.1.0.0</property>
+    <property name="modified">2020-06-21T16:20:37</property>
+    <property name="originalScheme">Monokai  Alex Wolf Touchups</property>
   </metaInfo>
   <colors>
     <option name="CARET_COLOR" value="f8f8f0" />
     <option name="CARET_ROW_COLOR" value="3e3d32" />
-    <option name="CONSOLE_BACKGROUND_KEY" value="272822" />
+    <option name="CONSOLE_BACKGROUND_KEY" value="1a1a1a" />
     <option name="GUTTER_BACKGROUND" value="272822" />
     <option name="INDENT_GUIDE" value="464741" />
     <option name="LINE_NUMBERS_COLOR" value="f8f8f2" />
@@ -214,14 +214,24 @@
         <option name="FOREGROUND" value="75715e" />
       </value>
     </option>
+    <option name="CONSOLE_BLUE_BRIGHT_OUTPUT">
+      <value>
+        <option name="FOREGROUND" value="2379ff" />
+      </value>
+    </option>
     <option name="CONSOLE_BLUE_OUTPUT">
       <value>
-        <option name="FOREGROUND" value="c7c7ff" />
+        <option name="FOREGROUND" value="2379ff" />
+      </value>
+    </option>
+    <option name="CONSOLE_CYAN_BRIGHT_OUTPUT">
+      <value>
+        <option name="FOREGROUND" value="4788f0" />
       </value>
     </option>
     <option name="CONSOLE_CYAN_OUTPUT">
       <value>
-        <option name="FOREGROUND" value="6b8b8" />
+        <option name="FOREGROUND" value="4788f0" />
       </value>
     </option>
     <option name="CONSOLE_ERROR_OUTPUT">
@@ -234,14 +244,19 @@
         <option name="FOREGROUND" value="a7a7a7" />
       </value>
     </option>
+    <option name="CONSOLE_GREEN_BRIGHT_OUTPUT">
+      <value>
+        <option name="FOREGROUND" value="1cff97" />
+      </value>
+    </option>
     <option name="CONSOLE_GREEN_OUTPUT">
       <value>
-        <option name="FOREGROUND" value="68e868" />
+        <option name="FOREGROUND" value="1ed90d" />
       </value>
     </option>
     <option name="CONSOLE_MAGENTA_OUTPUT">
       <value>
-        <option name="FOREGROUND" value="ff2eff" />
+        <option name="FOREGROUND" value="bb59bb" />
       </value>
     </option>
     <option name="CONSOLE_NORMAL_OUTPUT">
@@ -249,9 +264,14 @@
         <option name="FOREGROUND" value="ffffff" />
       </value>
     </option>
+    <option name="CONSOLE_RED_BRIGHT_OUTPUT">
+      <value>
+        <option name="FOREGROUND" value="d91703" />
+      </value>
+    </option>
     <option name="CONSOLE_RED_OUTPUT">
       <value>
-        <option name="FOREGROUND" value="ff6767" />
+        <option name="FOREGROUND" value="d91703" />
       </value>
     </option>
     <option name="CONSOLE_SYSTEM_OUTPUT">
@@ -264,9 +284,14 @@
         <option name="FOREGROUND" value="6ae96a" />
       </value>
     </option>
+    <option name="CONSOLE_WHITE_OUTPUT">
+      <value>
+        <option name="FOREGROUND" value="ffffff" />
+      </value>
+    </option>
     <option name="CONSOLE_YELLOW_OUTPUT">
       <value>
-        <option name="FOREGROUND" value="754200" />
+        <option name="FOREGROUND" value="f4b400" />
       </value>
     </option>
     <option name="CSS.COMMENT">
