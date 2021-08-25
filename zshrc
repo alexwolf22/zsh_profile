@@ -97,6 +97,7 @@ plugins=(
 	zsh-syntax-highlighting
 	osx
 	sublime
+	git-flow-completion
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -145,22 +146,57 @@ eval "$(pyenv virtualenv-init -)"
 # Delete all Alias's defined by ZSh and plugins
 unalias -m '*'
 
-# Pyenv Aliases
-CURR_BOWTIE_ENV='bowtie-3.6.10'
-alias pyenvv='pyenv versions'
-alias spy='pyenv activate $CURR_BOWTIE_ENV'
+# Colors for printing
+RED=$'\e[1;31m'
+GREEN=$'\e[1;32m'
+BLUE=$'\e[1;34m'
+PURPLE=$'\e[1;35m'
+ENDCOLOR=$'\e[0m'
+CYAN=$'\e[1;36m'
+WHITE=$'\e[1;37m'
 
-# Make Parrot
-alias parrot='curl parrot.live'
+# Code dir AI aliases
+alias water='cd /Users/alex.wolf/Code/water-ai-app'
+alias bowtie='cd /Users/alex.wolf/Code/chatbot-web'
 
-# Add color ls
-alias lc='colorls -lA --sd'
+# # Python enviroment stuff
+# CURR_ENV='water-ai-app_3.8.6'
+# CURR_PYTHON_VERSION='3.8.6'
+# spy(){
+# 	# Activate pyenv vitual env
+# 	if [ $# -eq 0 ]; then
+# 		ENV=$CURR_ENV
+# 	else
+# 		ENV=$1
+# 	fi
+# 	printf "Activating pyenv "$WHITE"$ENV\n"$ENDCOLOR
+# 	pyenv activate $ENV
+# }
+
+# alias pyenv_create='pyenv virtualenv' # arg1 = pythonversion; arg2 =env name
+# alias pyenvv='pyenv versions'
+# alias pyenva='pyenv activate'
+# alias pyenvd='source deactivate'
+
+# Compile and install dev requirments to Water ai Pyenv
+pip_compile(){
+	water
+	spy
+	pip-compile -v --output-file requirements/requirements.txt requirements/requirements.in
+	pip-compile -v --output-file requirements/dev-requirements.txt requirements/dev-requirements.in
+	pip-sync requirements/requirements.txt requirements/dev-requirements.txt
+}
+
 
 # Make regualr ls have colors
 export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagaced
 
-# Bowtie Local Aliase
+# Water AI Project specific stuff
+export ENVIRONMENT='local'
+export DJANGO_SETTINGS_MODULE="water_ai.settings"
+
+# Django DB aliases
 alias mg='./manage.py migrate'
 alias mm='./manage.py makemigrations'
 alias mmm='./manage.py makemigrations --merge'
@@ -216,6 +252,7 @@ alias ..='cd ..'
 alias ...='cd ..; cd ..'
 alias ....='cd ..; cd ..; cd ..'
 alias o='open'
+alias code='cd ~/Code'
 
 # Git
 alias gs='git status'
@@ -223,6 +260,7 @@ alias gc='git commit -m'
 alias gst='git stash'
 alias gsta='git stash apply'
 alias gl='git log'
+alias glc='git log --graph --oneline --decorate --all'
 alias gaa='git add -A'
 alias ga='git add'
 alias gd='git diff'
@@ -251,15 +289,6 @@ alias gtop='docker run --rm -it --name gtop --net="host" --pid="host" aksakalli/
 
 # Install spacy model
 alias dw_spacy_en='python -m spacy download en_core_web_sm'
-
-# Colors for printing
-RED=$'\e[1;31m'
-GREEN=$'\e[1;32m'
-BLUE=$'\e[1;34m'
-PURPLE=$'\e[1;35m'
-ENDCOLOR=$'\e[0m'
-CYAN=$'\e[1;36m'
-WHITE=$'\e[1;37m'
 
 # convert pycharm relative path to test path
 tp () {
@@ -332,29 +361,8 @@ zsh_git_push() {
 }
 
 
-BOWTIE_DIR='/Users/alex.wolf/Documents/chatbot-web'
-pip_compile() {
-	cur_dir=$(pwd)
-	if [ "$1" != 'prod' ] && [ "$1" != 'dev' ]; then
-		echo "\nPlease pass 'dev' or 'prod' as the first arguemnt to the call"
-	else
-		in_file="${BOWTIE_DIR}/requirements/${1}.in"
-		output_file="${BOWTIE_DIR}/requirements/${1}.txt"
-		/Users/alex.wolf/Documents/general_env/bin/pip-compile -v --output-file $output_file $in_file
-
-		#Fix the security libs Bowtie requires
-		search='msgpack==.*'
-		replacement='msgpack==0.6.1            # custom version upgrade for Bowtie'
-		sed -i '' "s/${search}/${replacement}/" $output_file
-
-		search='urllib3==.*'
-		replacement='urllib3==1.25.2           # custom version upgrade for Bowtie'
-		sed -i '' "s/${search}/${replacement}/" $output_file
-	fi
-}
-
 kill_processes_with_port(){
-	lsof -ti:$1 | xargs kill
+	kill -9 $(lsof -t -i:$1)
 }
 
 BOWTIE_TEST_SUITE_DIR='/Users/alex.wolf/Documents/chatbot-web-tests'
@@ -415,26 +423,14 @@ drop_db_connect(){
 }
 
 
-# STUFF USED FOR PYZTHON 3 Migration
 
-# move_envs_b(){
-# 	mv /Users/alex.wolf/Documents/chatbot-web/env27 /Users/alex.wolf/Documents/env27
-# 	mv /Users/alex.wolf/Documents/chatbot-web/env37 /Users/alex.wolf/Documents/env37
-# }
+# For fixing pyenv new pythoin version isntallation
+# see https://github.com/pyenv/pyenv/issues/1740
+export PATH="$HOME/.pyenv/bin:$PATH"
+export PATH="/usr/local/bin:$PATH"
 
-# move_envs_f() {
-# 	mv /Users/alex.wolf/Documents/env27 /Users/alex.wolf/Documents/chatbot-web/env27
-# 	mv /Users/alex.wolf/Documents/env37 /Users/alex.wolf/Documents/chatbot-web/env37
-# }
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+export LDFLAGS="-L/usr/local/opt/zlib/lib -L/usr/local/opt/bzip2/lib"
+export CPPFLAGS="-I/usr/local/opt/zlib/include -I/usr/local/opt/bzip2/include"
 
-# alias frize='/Users/alex.wolf/Documents/general_env/bin/futurize'
-
-# apply_fix() {
-# 	cd '/Users/alex.wolf/Documents/chatbot-web'
-# 	/Users/alex.wolf/Documents/general_env/bin/futurize -w -n -f $1 -j 12 --no-diffs **/*.py
-# }
-
-# apply_23fix() {
-# 	cd '/Users/alex.wolf/Documents/chatbot-web'
-# 	/usr/local/bin/2to3 -w -n -f $1 -j 12 --no-diffs **/*.py
-# }

@@ -1,9 +1,9 @@
 <scheme name="Monokai  Alex Wolf Touchups" version="142" parent_scheme="Darcula">
   <metaInfo>
-    <property name="created">2020-06-21T16:20:32</property>
+    <property name="created">2021-08-25T18:38:37</property>
     <property name="ide">Python</property>
-    <property name="ideVersion">2020.1.1.0.0</property>
-    <property name="modified">2020-06-21T16:20:37</property>
+    <property name="ideVersion">2020.2.5.0.0</property>
+    <property name="modified">2021-08-25T18:38:43</property>
     <property name="originalScheme">Monokai  Alex Wolf Touchups</property>
   </metaInfo>
   <colors>
@@ -443,6 +443,12 @@
     </option>
     <option name="DEFAULT_BRACES" baseAttributes="" />
     <option name="DEFAULT_BRACKETS" baseAttributes="" />
+    <option name="DEFAULT_CLASS_NAME">
+      <value>
+        <option name="FOREGROUND" value="ffce17" />
+        <option name="BACKGROUND" value="272822" />
+      </value>
+    </option>
     <option name="DEFAULT_COMMA" baseAttributes="" />
     <option name="DEFAULT_CONSTANT" baseAttributes="DEFAULT_IDENTIFIER" />
     <option name="DEFAULT_DOC_COMMENT">
@@ -926,6 +932,12 @@
     <option name="JAVA_VALID_STRING_ESCAPE">
       <value>
         <option name="FOREGROUND" value="ae81ff" />
+      </value>
+    </option>
+    <option name="JS.CLASS">
+      <value>
+        <option name="FOREGROUND" value="ffce17" />
+        <option name="BACKGROUND" value="272822" />
       </value>
     </option>
     <option name="JS.GLOBAL_VARIABLE">
